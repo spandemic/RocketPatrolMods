@@ -1,3 +1,8 @@
+// Track a high score that persists across scenes and display it in the UI (5)
+
+
+
+
 let config = {
     type: Phaser.CANVAS,
     width: 640,
@@ -8,6 +13,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 let keyF, keyR, keyLEFT, keyRIGHT;
+let highScore = 0;
 
 // set UI sizes
 let borderUISize = game.config.height / 15;
