@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
       }
 
     create() {
+        
         // scrolling backdrop
         this.starfield = this.add.tileSprite(0, 0, 640, 480, "starfield").setOrigin(0, 0);
         // green UI background
@@ -54,18 +55,25 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-        
+        // high score
+        scoreConfig.fixedWidth = 0;
+        this.add.text(borderUISize + borderPadding*30, borderUISize + borderPadding*2, 'Top Score: ' + highScore, scoreConfig);
         this.gameOver = false;
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(60000, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or LEFT arrow for Menu', scoreConfig).setOrigin(0.5);
+            scoreConfig.fontSize = 22;
+            this.add.text(game.config.width/2, game.config.height/2 + 64, '(R)estart or (LEFT) for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
             }, null, this);
     }
 
     update() {
+        // highscore checker
+        if (this.p1Score > highScore) {
+            highScore = this.p1Score;
+        }
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
         this.scene.restart();
@@ -96,6 +104,7 @@ class Play extends Phaser.Scene {
             this.ship02.update();
             this.ship03.update();
             } 
+        
     }
 
     checkCollision(rocket, ship) {
