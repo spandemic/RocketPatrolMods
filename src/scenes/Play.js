@@ -78,21 +78,23 @@ class Play extends Phaser.Scene {
         }else{
             this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, 'P1: ' + this.p1Rocket.score, scoreConfig);
             scoreConfig.fixedWidth = 0;
-            this.timerText = this.add.text(borderUISize + borderPadding * 9, borderUISize + borderPadding*2, 'Time: ' + this.timerTime, scoreConfig);
-            this.add.text(borderUISize + borderPadding*25, borderUISize + borderPadding*2, 'FIRE', scoreConfig);
-            this.add.text(borderUISize + borderPadding*35, borderUISize + borderPadding*2, 'Top: ' + highScore, scoreConfig);   
+            this.timerText = this.add.text(borderUISize + borderPadding * 25, borderUISize + borderPadding*2, 'Time: ' + this.timerTime, scoreConfig);
+            this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, 'FIRE', scoreConfig);
+            this.add.text(borderUISize + borderPadding*40, borderUISize + borderPadding*2, 'Top: ' + highScore, scoreConfig);   
         }
         
         this.gameOver = false;
 
         // play clock
-        this.time.addEvent({ delay: 1000, callback: this.secondTimeSub, callbackScope: this, loop: true });
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+        this.time.addEvent({ delay: 1000, callback: this.secondTimeChange, callbackScope: this, loop: true });
+        /*
+        this.clock = this.time.delayedCall(this.timerTime * 1000, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             scoreConfig.fontSize = 22;
             this.add.text(game.config.width/2, game.config.height/2 + 64, '(R)estart or (LEFT) for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
             }, null, this);
+            */
       
     }
 
@@ -103,8 +105,9 @@ class Play extends Phaser.Scene {
         }else if (game.settings.playerCount == 2) {
             if(this.p2Rocket.score > highScore) {
             highScore = this.p2Rocket.score
+            }
         }
-    }
+
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -114,10 +117,9 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        this.starfield.tilePositionX -= 2;
-        
+        this.starfield.tilePositionX -= 2;  
+        console.log(this.clock);
         // check collisions
-        if (game.settings.playerCount == 1) {
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03, this.p1Rocket);
@@ -130,19 +132,7 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01, this.p1Rocket);
             }
-        } else {
-            if(this.checkCollision(this.p1Rocket, this.ship03)) {
-                this.p1Rocket.reset();
-                this.shipExplode(this.ship03, this.p1Rocket);
-                }
-            if (this.checkCollision(this.p1Rocket, this.ship02)) {
-                this.p1Rocket.reset();
-                this.shipExplode(this.ship02, this.p1Rocket);
-                }
-            if (this.checkCollision(this.p1Rocket, this.ship01)) {
-                this.p1Rocket.reset();
-                this.shipExplode(this.ship01, this.p1Rocket);
-                }
+        if (game.settings.playerCount == 2) {
         if (this.checkCollision(this.p2Rocket, this.ship01)) {
             this.p2Rocket.reset();
             this.shipExplode(this.ship01, this.p2Rocket);
@@ -156,6 +146,7 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.ship03, this.p2Rocket);
             }
         }
+        
 
         if (!this.gameOver) {               
             this.p1Rocket.update();         // update rocket sprite
@@ -169,8 +160,8 @@ class Play extends Phaser.Scene {
         
     }
 
-    secondTimeSub(){
-        this.timerTime -= 1;   
+    secondTimeChange() {
+        this.timerTime -= 1;
         this.timerText.setText('Time: ' + this.timerTime);
     }
 

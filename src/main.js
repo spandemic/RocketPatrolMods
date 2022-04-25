@@ -3,7 +3,9 @@
 // Allow the player to control the Rocket after it's fired (5)
 // Create a new scrolling tile sprite for the background (5)
 // Display the time remaining (in seconds) on the screen (10)
+// Implement a simultaneous two-player mode (30)
 
+// TOTAL: 60 so far
 
 
 let config = {
