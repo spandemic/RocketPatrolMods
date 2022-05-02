@@ -3,9 +3,11 @@
 // Allow the player to control the Rocket after it's fired (5)
 // Create a new scrolling tile sprite for the background (5)
 // Display the time remaining (in seconds) on the screen (10)
+// Implement a new timing/scoring mechanism that adds time to the clock for successful hits (20)
+// Create a new spaceship type (w/ new artwork) that's smaller, moves faster, and is worth more points (20)
 // Implement a simultaneous two-player mode (30)
 
-// TOTAL: 60 so far
+// TOTAL: 100
 
 
 let config = {
