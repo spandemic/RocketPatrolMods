@@ -1,3 +1,9 @@
+// Andy Eng
+// Rocket Patrol Mods
+// 5/2/2022
+// 8 hours
+// late because of endless runner
+
 // Track a high score that persists across scenes and display it in the UI (5)
 // Implement the 'FIRE' UI text from the original game (5)
 // Allow the player to control the Rocket after it's fired (5)
@@ -8,6 +14,7 @@
 // Implement a simultaneous two-player mode (30)
 
 // TOTAL: 100
+
 
 
 let config = {
